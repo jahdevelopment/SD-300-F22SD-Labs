@@ -19,9 +19,9 @@ namespace Sales
         {
             VendingMachine myVending = new VendingMachine(100);
 
-            
+            Product Snickers = new Product("Snickers", 2, "A01");
 
-            myVending.StockItem( "Snickers" ,10);
+            myVending.StockItem( Snickers ,10);
 
             myVending.StockFloat(20,10);
         }

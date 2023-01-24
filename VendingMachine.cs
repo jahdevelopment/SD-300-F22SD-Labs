@@ -48,6 +48,8 @@ namespace SD_300_F22SD_Labs
 
         public string StockItem(Product product, int productquantity)
         {
+            string fillingInventory = "";
+
             if (Inventory.ContainsKey(product))
             {
                 Inventory[product] += productquantity;
@@ -56,8 +58,12 @@ namespace SD_300_F22SD_Labs
             {
                 Inventory.Add(product, productquantity);
             }
-
-            return $"New product available{product.Name}, code{product.Code}, just by ${product.Price}";
+            
+            fillingInventory = $"New product available: {product.Name}, code \"{product.Code}\", by ${product.Price}. There are {productquantity} units.";
+            
+            Console.WriteLine(fillingInventory);
+            
+            return fillingInventory;
         }
 
         public string StockFloat(int moneydenomination, int coinsquantity)
@@ -75,6 +81,7 @@ namespace SD_300_F22SD_Labs
             foreach(var item in MoneyFloat)
             {
                 moneyAdded = $"Added {item.Value} coins of ${item.Key} denomination.";
+                
                 Console.WriteLine(moneyAdded);
             }
             
