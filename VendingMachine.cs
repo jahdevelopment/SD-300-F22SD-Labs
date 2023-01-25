@@ -39,8 +39,9 @@ namespace SD_300_F22SD_Labs
 
             MoneyFloat = new Dictionary<int, int>();
 
-            Inventory= new Dictionary<Product, int>();
+            Inventory = new Dictionary<Product, int>();
 
+            Console.WriteLine($"\nStarting Operation of the Vending Machine #{serialnumber}\n");
         }
 
         
@@ -68,75 +69,47 @@ namespace SD_300_F22SD_Labs
 
         public string StockFloat(int moneydenomination, int coinsquantity)
         {
-            MoneyDenomination= moneydenomination;
-
-            CoinsQuantity= coinsquantity;
-
-            Dictionary<int, int> MoneyFloat = new Dictionary<int, int>();
-
-            MoneyFloat.Add(moneydenomination, coinsquantity);
-
             string moneyAdded = "";
+            MoneyDenomination = moneydenomination;
 
-            foreach(var item in MoneyFloat)
+            CoinsQuantity = coinsquantity;
+
+            if (MoneyFloat.ContainsKey(moneydenomination))
             {
-                moneyAdded = $"Added {item.Value} coins of ${item.Key} denomination.";
-                
-                Console.WriteLine(moneyAdded);
+                MoneyFloat[moneydenomination] += coinsquantity;
+                moneyAdded = $"Filling the ${moneydenomination} denomination with {coinsquantity} coins.";
             }
-            
+            else
+            {
+                MoneyFloat.Add(moneydenomination, coinsquantity);
+                moneyAdded = $"Added {coinsquantity} coins of ${moneydenomination} denomination.";
+            }
+            Console.WriteLine(moneyAdded);
             return moneyAdded;
         }
 
         public string VendItem(string code, List<int> money)
         {
-            Code= code;
+            string transactionMessage = "";
 
-            Money= money;
+            money = new List<int>();
 
-            int totalMoney = 0;
-
-            foreach(var item in Money)
+            foreach(var j in Inventory)
             {
-                totalMoney += item;
+                if (!j.Key.Equals(code))
+                {
+                    transactionMessage = $"Error, no item with code {code}";
+                }
             }
 
-            bool succesfullTransaction = false;
-
-            foreach(var item in Inventory)
-            {
-                if (item.Key.Equals(code)) 
-                { 
-                    succesfullTransaction= true;
-                }
-                else
-                {
-                    Console.WriteLine($"Error: {item.Key} is out of stock");
-                }
-
-                if (item.Value < totalMoney)
-                {
-                    succesfullTransaction = true;
-                }
-                else
-                {
-                    Console.WriteLine($"Error: insufficient money provided");
-                }
-            }
             
-            string transactionCompleted = "";
 
-            if (succesfullTransaction)
-            {
-                foreach(var i in Inventory)
-                {
-                    if (i.Key.Equals(code))
-                    {
-                        transactionCompleted = $"Please enjoy your {i} and take your change of $0.60";
-                    };
-                }
-            }
-            return transactionCompleted;
+
+
+
+
+            Console.WriteLine(transactionMessage);
+            return  transactionMessage;
         }
 
         
