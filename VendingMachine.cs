@@ -30,7 +30,7 @@ namespace SD_300_F22SD_Labs
 
         public List<int> money { get; set; }
 
-        
+
         // CONSTRUCTOR
 
         public VendingMachine(int serialnumber)
@@ -44,7 +44,7 @@ namespace SD_300_F22SD_Labs
             Console.WriteLine($"\nStarting Operation of the Vending Machine #{serialnumber}\n");
         }
 
-        
+
         // METHODS
 
         public string StockItem(Product product, int productquantity)
@@ -59,17 +59,18 @@ namespace SD_300_F22SD_Labs
             {
                 Inventory.Add(product, productquantity);
             }
-            
+
             fillingInventory = $"New product available: {product.Name}, code \"{product.Code}\", by ${product.Price}. There are {productquantity} units.";
-            
+
             Console.WriteLine(fillingInventory);
-            
+
             return fillingInventory;
         }
 
         public string StockFloat(int moneydenomination, int coinsquantity)
         {
             string moneyAdded = "";
+
             MoneyDenomination = moneydenomination;
 
             CoinsQuantity = coinsquantity;
@@ -77,43 +78,78 @@ namespace SD_300_F22SD_Labs
             if (MoneyFloat.ContainsKey(moneydenomination))
             {
                 MoneyFloat[moneydenomination] += coinsquantity;
+
                 moneyAdded = $"Filling the ${moneydenomination} denomination with {coinsquantity} coins.";
             }
             else
             {
                 MoneyFloat.Add(moneydenomination, coinsquantity);
+
                 moneyAdded = $"Added {coinsquantity} coins of ${moneydenomination} denomination.";
             }
             Console.WriteLine(moneyAdded);
+
             return moneyAdded;
         }
 
-        public string VendItem(string code, List<int> money)
+        public Product VendItem(string code, List<int> money)
         {
-            string transactionMessage = "";
-
-            money = new List<int>();
-
-            foreach(var j in Inventory)
-            {
-                if (!j.Key.Equals(code))
+         /////// VALIDATION OF CODE INSERTED BY THE CUSTOMER
+                if (!Inventory.Any(i => i.Key.Code == code))
                 {
-                    transactionMessage = $"Error, no item with code {code}";
+                    Console.WriteLine($"Error, no item with code \"{code}\"");
                 }
-            }
 
+                //////// VALIDATION OF THE STOCK PRODUCT
+                Product product = Inventory.First(i => i.Key.Code == code).Key;
+
+                int quantity = Inventory[product];
+
+                if (quantity == 0)
+                {
+                    Console.WriteLine("Error: Item is out of stock");
+                }
+
+                /////// VALIDATION OF MONEY INSERTED
+                int totalMoney = money.Sum();
+
+                if (totalMoney < product.Price)
+                {
+                    Console.WriteLine("Error: insufficient money provided");
+                
+                }
+
+                /////// RUNNING TRANSACTION
+                int change = totalMoney - product.Price;
+
+                Inventory[product]--;
+
+                string changeString = "";
+
+                foreach (var item in MoneyFloat)
+                {
+                    int denomination = item.Key;
+
+                    int denominationQuantity = item.Value;
+
+                    while (change >= denomination && denominationQuantity > 0)
+                    {
+                        change -= denomination;
+
+                        denominationQuantity--;
+
+                        MoneyFloat[denomination]--;
+
+                        changeString += $"{denomination} ";
+                    }
+                }
+                string completedTransaction = $"Please enjoy your {product.Name} and take your change of ${changeString}";
+
+                Console.WriteLine(completedTransaction);
+            
             
 
-
-
-
-
-            Console.WriteLine(transactionMessage);
-            return  transactionMessage;
+            return null;
         }
-
-        
-
-        
     }
 }
