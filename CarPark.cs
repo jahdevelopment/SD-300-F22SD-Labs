@@ -15,6 +15,7 @@ namespace SD_300_F22SD_Labs
             _parkingspots.Add(parkingSpot);
 
             parkingSpot.SetCarPark(this);
+
         }
 
         public HashSet<ParkingSpot> GetParkingSpots()
@@ -53,13 +54,40 @@ namespace SD_300_F22SD_Labs
             }
         }
 
-        private int _spotcount = 1;
+        private int _spotcount = 0;
+
+        private void _parkvehicle(Vehicle vehicle)
+        {
+            if (_spotcount <= Capacity)
+            {
+                
+                
+                _spotcount++;
+            }
+            else
+            {
+                throw new Exception("sorry, No spaces available for parking at this moment.");
+            }
+
+          
+        }
         
         //////// CONSTRUCTOR 
         
         public CarPark(int capacity)
         {
             _setcapacity(capacity);
+
+            _initializeemptyspots();
+        }
+
+        public CarPark(Vehicle vehicle, ParkingSpot parkingSpot)
+        {
+            _parkvehicle(vehicle);
+
+            _parkingspots.Add(parkingSpot);
+
+            parkingSpot.SetCarPark(this);
         }
     }
 }
