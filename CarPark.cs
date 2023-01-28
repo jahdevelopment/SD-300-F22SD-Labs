@@ -60,16 +60,17 @@ namespace SD_300_F22SD_Labs
         {
             if (_spotcount <= Capacity)
             {
-                
-                
                 _spotcount++;
             }
             else
             {
                 throw new Exception("sorry, No spaces available for parking at this moment.");
             }
+        }
 
-          
+        public void RemoveCar(Vehicle vehicle)
+        {
+            _parkingspots.Remove(vehicle);
         }
         
         //////// CONSTRUCTOR 
