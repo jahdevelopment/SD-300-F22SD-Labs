@@ -9,7 +9,7 @@ namespace SD_300_F22SD_Labs
     public class Course
     {
         private int _courseId;
-        // readonly -- only define at start
+        
         public int CourseId { get { return _courseId; } }
         private void _setCourseId(int courseId)
         {
@@ -53,37 +53,60 @@ namespace SD_300_F22SD_Labs
             }
         }
 
-        // one course contains many students
-        private HashSet<Student> _students = new HashSet<Student>();
-        // get method exposes entire collection -- make specific methods instead
-        public Student? GetStudentInCourse(int studentId)
+       
+        private HashSet<Enrolment> _enrolments = new HashSet<Enrolment>();
+        
+        public Enrolment? GetStudentInCourse(int studentId)
         {
-            foreach (Student s in _students)
+            string answer;
+
+            foreach (Enrolment e in _enrolments)
             {
-                if (s.StudentId == studentId)
+                if (e.Student.StudentId == studentId)
                 {
-                    return s;
+                    answer = e.Student.FirstName ;
+
+                    Console.WriteLine(answer);
+                }
+                else
+                {
+                    throw new Exception("Student not registered");
                 }
             }
 
             return null;
-        }
-        public void AddStudentToCourse(Student student)
-        {
-            if (_students.Count < Capacity)
-            {
-                _students.Add(student);
-            }
-            else
-            {
-                throw new Exception($"Course is at enrolment capacity {Capacity}");
-            }
+
         }
 
-        public void RemoveStudentFromCourse(Student student)
-        {
-            _students.Remove(student);
-        }
+        //private HashSet<Student> _students = new HashSet<Student>();
+        
+        //public Student? GetStudentInCourse(int studentId)
+        //{
+        //    foreach (Student s in _students)
+        //    {
+        //        if (s.StudentId == studentId)
+        //        {
+        //            return s;
+        //        }
+        //    }
+        //    return null;
+        //}
+        //public void AddStudentToCourse(Student student)
+        //{
+        //    if (_students.Count < Capacity)
+        //    {
+        //        _students.Add(student);
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"Course is at enrolment capacity {Capacity}");
+        //    }
+        //}
+
+        //public void RemoveStudentFromCourse(Student student)
+        //{
+        //    _students.Remove(student);
+        //}
 
 
         public Course(int courseId, string title, int capacity)

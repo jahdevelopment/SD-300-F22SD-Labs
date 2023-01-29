@@ -58,38 +58,57 @@ namespace SD_300_F22SD_Labs
             }
         }
 
-        // many students can each take one course
         public Course Course { get; set; }
 
-        private int? _courseGrade;
-        public int? CourseGrade { get { return _courseGrade; } }
-        public void SetCourseGrade(int grade)
+        public Enrolment Enrolment { get; set; }
+
+
+        public Enrolment GetStudentGrade(Student student)
         {
-            if (Course == null)
+            int Grade = 0;
+            if (Enrolment.EnrolmentId == null)
             {
-                throw new Exception("Student not enrolled in any course.");
-            }
-            else if (grade < 0 || grade > 100)
-            {
-                throw new Exception("Grade must be between 0 and 100)");
+                throw new Exception($"Student {studentId} not enrolled in any course.");
             }
             else
             {
-                _courseGrade = grade;
-            };
+                Grade = Enrolment.StudentGrade;
+                Console.WriteLine(Grade);
+            }
+
+
+            return null;
         }
-        public void RemoveGrade()
+
+        //private int? _courseGrade;
+        //public int? CourseGrade { get { return _courseGrade; } }
+        //public void SetCourseGrade(int grade)
+        //{
+        //    if (Course == null)
+        //    {
+        //        throw new Exception("Student not enrolled in any course.");
+        //    }
+        //    else if (grade < 0 || grade > 100)
+        //    {
+        //        throw new Exception("Grade must be between 0 and 100)");
+        //    }
+        //    else
+        //    {
+        //        _courseGrade = grade;
+        //    };
+        //}
+        //public void RemoveGrade()
+        //{
+        //    _courseGrade = null;
+        //}
+
+        private DateTime? _enrolmentDate;
+
+        public DateTime? EnrolmentDate
         {
-            _courseGrade = null;
-        }
+            get { return _enrolmentDate; }
 
-        private DateTime? _registrationdate;
-
-        public DateTime? RegistrationDate
-        {
-            get { return _registrationdate; }
-
-            set { _registrationdate = value; }
+            set { _enrolmentDate = value; }
         }
 
 
@@ -103,13 +122,10 @@ namespace SD_300_F22SD_Labs
         public Student(int studentId, string firstName, string lastName)
         {
             _setStudentId(studentId);
-
-            // if we define public set methods on properties, we should ONLY use those to change the value of a field, so that we use their validation
+            
             FirstName = firstName;
-            LastName = lastName;
 
-            // if we use a field to change a value, we do not validate
-            // avoid direct assignment to a field (e.g. _lastName = lastName)
+            LastName = lastName;
         }
     }
 }

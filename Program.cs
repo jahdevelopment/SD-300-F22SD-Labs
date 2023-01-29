@@ -21,7 +21,6 @@ catch (Exception ex)
 
 
 
-
 void RegisterStudent(Student student, Course course)
 {
 
