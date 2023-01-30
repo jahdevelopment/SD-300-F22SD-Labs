@@ -68,15 +68,13 @@ namespace SD_300_F22SD_Labs
             int Grade = 0;
             if (Enrolment.EnrolmentId == null)
             {
-                throw new Exception($"Student {studentId} not enrolled in any course.");
+                throw new Exception($"Student {student} not enrolled in any course.");
             }
             else
             {
                 Grade = Enrolment.StudentGrade;
                 Console.WriteLine(Grade);
             }
-
-
             return null;
         }
 
@@ -102,14 +100,14 @@ namespace SD_300_F22SD_Labs
         //    _courseGrade = null;
         //}
 
-        private DateTime? _enrolmentDate;
+        //private DateTime? _enrolmentDate;
 
-        public DateTime? EnrolmentDate
-        {
-            get { return _enrolmentDate; }
+        //public DateTime? EnrolmentDate
+        //{
+        //    get { return _enrolmentDate; }
 
-            set { _enrolmentDate = value; }
-        }
+        //    set { _enrolmentDate = value; }
+        //}
 
 
 

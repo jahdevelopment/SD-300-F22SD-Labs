@@ -53,49 +53,35 @@ namespace SD_300_F22SD_Labs
             }
         }
 
-       
-        private HashSet<Enrolment> _enrolments = new HashSet<Enrolment>();
-        
-        public Enrolment? GetStudentInCourse(int studentId)
-        {
-            string answer;
 
-            foreach (Enrolment e in _enrolments)
-            {
-                if (e.Student.StudentId == studentId)
-                {
-                    answer = e.Student.FirstName ;
 
-                    Console.WriteLine(answer);
-                }
-                else
-                {
-                    throw new Exception("Student not registered");
-                }
-            }
-
-            return null;
-
-        }
-
-        //private HashSet<Student> _students = new HashSet<Student>();
-        
-        //public Student? GetStudentInCourse(int studentId)
+        //public Enrolment? GetStudentInCourse(int studentId)
         //{
-        //    foreach (Student s in _students)
+        //    string answer;
+
+        //    foreach (Enrolment e in _enrolments)
         //    {
-        //        if (s.StudentId == studentId)
+        //        if (e.Student.StudentId == studentId)
         //        {
-        //            return s;
+        //            answer = e.Student.FirstName ;
+
+        //            Console.WriteLine(answer);
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("Student not registered");
         //        }
         //    }
         //    return null;
         //}
-        //public void AddStudentToCourse(Student student)
+
+        //private HashSet<Enrolment> _enrolments = new HashSet<Enrolment>();
+
+        //public void AddEnrolmentToCourse(Enrolment enrolment)
         //{
-        //    if (_students.Count < Capacity)
+        //    if (_enrolments.Count < Capacity)
         //    {
-        //        _students.Add(student);
+        //        _enrolments.Add(enrolment);
         //    }
         //    else
         //    {
@@ -103,10 +89,40 @@ namespace SD_300_F22SD_Labs
         //    }
         //}
 
-        //public void RemoveStudentFromCourse(Student student)
-        //{
-        //    _students.Remove(student);
-        //}
+
+
+
+        private HashSet<Student> _students = new HashSet<Student>();
+
+        public Student? GetStudentInCourse(int studentId)
+        {
+            foreach (Student s in _students)
+            {
+                if (s.StudentId == studentId)
+                {
+                    return s;
+                }
+            }
+            return null;
+        }
+
+
+        public void AddStudentToCourse(Student student)
+        {
+            if (_students.Count < Capacity)
+            {
+                _students.Add(student);
+            }
+            else
+            {
+                throw new Exception($"course is at enrolment capacity {Capacity}");
+            }
+        }
+
+        public void RemoveStudentFromCourse(Student student)
+        {
+            _students.Remove(student);
+        }
 
 
         public Course(int courseId, string title, int capacity)

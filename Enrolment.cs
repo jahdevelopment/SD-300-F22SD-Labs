@@ -15,7 +15,7 @@ namespace SD_300_F22SD_Labs
             get { return _enrolmentId; }
         }
 
-        public void SetEnrolmentId(int enrolmentId)
+        public void _setEnrolmentId(int enrolmentId)
         {
             if (enrolmentId > 0)
             {
@@ -31,6 +31,7 @@ namespace SD_300_F22SD_Labs
 
         public Student Student { get; set; }
 
+        
         private int _studentGrade;
 
         public int StudentGrade 
@@ -38,7 +39,7 @@ namespace SD_300_F22SD_Labs
             get { return _studentGrade; } 
         }
 
-        public void SetStudentGrade(int studentGrade)
+        public void _setStudentGrade(int studentGrade)
         {
             if (studentGrade >= 0 && studentGrade <= 100)
             {
@@ -61,13 +62,21 @@ namespace SD_300_F22SD_Labs
 
         public Enrolment(int enrolmentId, Course course, Student student, int studentGrade)
         {
-            _enrolmentId = enrolmentId;
+            _setEnrolmentId(enrolmentId);
             Course = course;
             Student = student;
-            _studentGrade = studentGrade;
+            _setStudentGrade(studentGrade);
             EnrolmentDate = DateTime.Now;
             
         }
+        
+        //public Enrolment(int enrolmentId, int studentGrade)
+        //{
+        //    _setEnrolmentId(enrolmentId);
+        //    _setStudentGrade(studentGrade);
+        //    EnrolmentDate = DateTime.Now;
+
+        //}
 
     }
 }
